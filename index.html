@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Арабский язык — Учебник</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📚 Арабский язык</h1>
+
+            <!-- Search bar -->
+            <input 
+                type="text" 
+                class="search-box" 
+                id="searchBox" 
+                placeholder="🔍 Поиск по-русски..."
+            >
+
+            <!-- Category dropdown -->
+            <select class="category-select" id="categorySelect">
+                <option value="all">Все категории</option>
+            </select>
+
+            <!-- Progress counter -->
+            <div class="progress">
+                Слово <span id="current">1</span> из <span id="total">0</span>
+            </div>
+        </div>
+
+        <!-- Card container -->
+        <div id="cardContainer">
+            <div class="card">
+                <div class="category-badge" id="categoryBadge">Категория</div>
+                <div class="arabic-word" id="arabic">كِتَاب</div>
+                <div class="phonetic" id="phonetic">kitāb</div>
+
+                <div class="image-container">
+                    <img 
+                        class="word-image" 
+                        id="image" 
+                        src="https://images.unsplash.com/photo-1512820790803-83ca734da794?w=400" 
+                        alt="пример"
+                    >
+                </div>
+
+                <div class="russian-word" id="russian">пример</div>
+
+                <button class="audio-button" id="playAudio">🔊 Слушать</button>
+            </div>
+
+            <!-- Navigation buttons -->
+            <div class="navigation">
+                <button class="nav-button" id="prevBtn">← Назад</button>
+                <button class="nav-button" id="nextBtn">Вперёд →</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
