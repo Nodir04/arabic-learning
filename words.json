@@ -1,3 +1,4 @@
+{
 "Фрукты": [
   {"arabic": "تُفَّاحٌ", "phonetic": "tuffāḥun", "russian": "яблоко"},
   {"arabic": "مَوْزٌ", "phonetic": "mawzun", "russian": "банан"},
@@ -468,3 +469,4 @@
   {"arabic": "عَاطِفَةٌ", "phonetic": "ʿāṭifatun", "russian": "чувство / эмоция"},
   {"arabic": "حَنَانٌ", "phonetic": "ḥanānun", "russian": "нежность / ласка"}
 ]
+}
