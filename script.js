@@ -5,7 +5,12 @@
 let vocabulary = {};
 let currentCategory = null;
 let currentIndex = 0;
-let arabicVoice = null;
+
+// -------------------------------
+// 🔑 Hugging Face TTS Settings
+// -------------------------------
+const HF_API_TOKEN = "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"; // ← Replace this with your Hugging Face token
+const TTS_MODEL = "facebook/mms-tts-ara";
 
 // -------------------------------
 // Load Vocabulary JSON
@@ -15,7 +20,6 @@ fetch('vocabulary.json')
   .then(data => {
     vocabulary = data;
     populateCategoryDropdown();
-    // Load the first category by default
     const firstCategory = Object.keys(vocabulary)[0];
     if (firstCategory) {
       currentCategory = firstCategory;
@@ -92,13 +96,11 @@ document.getElementById('searchInput').addEventListener('input', (e) => {
   const query = e.target.value.trim().toLowerCase();
 
   if (query === '') {
-    // reset to current category
     currentIndex = 0;
     displayWord(currentIndex);
     return;
   }
 
-  // Find the first match in all categories
   for (const category in vocabulary) {
     const matchIndex = vocabulary[category].findIndex(word =>
       word.russian.toLowerCase().includes(query)
@@ -114,38 +116,38 @@ document.getElementById('searchInput').addEventListener('input', (e) => {
 });
 
 // -------------------------------
-// Text-to-Speech (Browser)
+// Hugging Face MMS Arabic TTS
 // -------------------------------
-function loadVoices() {
-  const voices = window.speechSynthesis.getVoices();
-  arabicVoice = voices.find(v => v.lang.toLowerCase().startsWith('ar'));
-}
-
-// Chrome loads voices asynchronously
-if (typeof speechSynthesis !== 'undefined') {
-  speechSynthesis.onvoiceschanged = loadVoices;
-  loadVoices();
-}
-
-function playTTS(text) {
-  if (!('speechSynthesis' in window)) {
-    alert('Text-to-Speech is not supported in this browser.');
+async function playTTS(text) {
+  if (!HF_API_TOKEN || HF_API_TOKEN === "YOUR_HF_API_KEY_HERE") {
+    alert("Please set your Hugging Face API key in script.js");
     return;
   }
 
-  const utterance = new SpeechSynthesisUtterance(text);
-  utterance.lang = 'ar-SA';
+  try {
+    const response = await fetch(`https://api-inference.huggingface.co/models/${TTS_MODEL}`, {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${HF_API_TOKEN}`,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ inputs: text })
+    });
 
-  if (arabicVoice) {
-    utterance.voice = arabicVoice;
-  } else {
-    console.warn('No Arabic voice found. Using default voice.');
+    if (!response.ok) {
+      throw new Error(`TTS API error: ${response.status}`);
+    }
+
+    const audioBlob = await response.blob();
+    const audioUrl = URL.createObjectURL(audioBlob);
+    const audio = new Audio(audioUrl);
+    audio.play();
+  } catch (error) {
+    console.error("TTS Error:", error);
   }
-
-  speechSynthesis.cancel(); // stop previous speech
-  speechSynthesis.speak(utterance);
 }
 
+// Pronounce button
 document.getElementById('ttsBtn').addEventListener('click', () => {
   const word = document.getElementById('arabicWord').textContent;
   if (word && word !== '—') {
