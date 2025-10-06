@@ -1,15 +1,14 @@
-// Vocabulary will be loaded from words.json
+// Global variables
 let vocabulary = {};
 let currentCategory = "all";
 let currentWords = [];
 let currentIndex = 0;
 let filteredWords = [];
 
-// Elements
+// DOM elements
 const arabicEl = document.getElementById('arabic');
 const phoneticEl = document.getElementById('phonetic');
 const russianEl = document.getElementById('russian');
-const imageEl = document.getElementById('image');
 const categoryBadgeEl = document.getElementById('categoryBadge');
 const currentEl = document.getElementById('current');
 const totalEl = document.getElementById('total');
@@ -25,17 +24,18 @@ async function loadVocabulary() {
     try {
         const response = await fetch('words.json');
         if (!response.ok) {
-            throw new Error('Failed to load vocabulary file');
+            throw new Error('Failed to load words.json');
         }
         vocabulary = await response.json();
+        console.log('Vocabulary loaded:', Object.keys(vocabulary).length, 'categories');
         init();
     } catch (error) {
         console.error('Error loading vocabulary:', error);
-        cardContainer.innerHTML = '<div class="no-results">❌ Ошибка загрузки словаря<br>Проверьте файл words.json</div>';
+        cardContainer.innerHTML = '<div class="no-results">Ошибка загрузки словаря<br>Убедитесь, что файл words.json находится в той же папке</div>';
     }
 }
 
-// Initialize
+// Initialize the app
 function init() {
     // Populate category dropdown
     Object.keys(vocabulary).forEach(category => {
@@ -47,8 +47,11 @@ function init() {
 
     loadAllWords();
     updateCard();
+    
+    console.log('App initialized with', currentWords.length, 'words');
 }
 
+// Load all words from all categories
 function loadAllWords() {
     currentWords = [];
     Object.keys(vocabulary).forEach(category => {
@@ -59,6 +62,7 @@ function loadAllWords() {
     filteredWords = [...currentWords];
 }
 
+// Filter by category
 function filterByCategory(category) {
     currentCategory = category;
     if (category === "all") {
@@ -71,6 +75,7 @@ function filterByCategory(category) {
     filterBySearch(searchBox.value);
 }
 
+// Filter by search query
 function filterBySearch(query) {
     query = query.toLowerCase().trim();
     if (!query) {
@@ -89,32 +94,31 @@ function filterBySearch(query) {
     }
 }
 
+// Show no results message
 function showNoResults() {
-    cardContainer.innerHTML = '<div class="no-results">😔 Слово не найдено<br>Попробуйте другой запрос</div>';
+    cardContainer.innerHTML = '<div class="no-results">Слово не найдено<br>Попробуйте другой запрос</div>';
 }
 
+// Update the card with current word
 function updateCard() {
     if (filteredWords.length === 0) {
         showNoResults();
         return;
     }
 
-    // Restore card if it was replaced by no-results message
+    // Restore card if it was replaced
     if (cardContainer.querySelector('.no-results')) {
         cardContainer.innerHTML = `
             <div class="card">
                 <div class="category-badge" id="categoryBadge"></div>
                 <div class="arabic-word" id="arabic"></div>
                 <div class="phonetic" id="phonetic"></div>
-                <div class="image-container">
-                    <img class="word-image" id="image" src="" alt="">
-                </div>
                 <div class="russian-word" id="russian"></div>
-                <button class="audio-button" id="playAudio">🔊 Слушать</button>
+                <button class="audio-button" id="playAudio">Слушать</button>
             </div>
             <div class="navigation">
-                <button class="nav-button" id="prevBtn">← Назад</button>
-                <button class="nav-button" id="nextBtn">Вперёд →</button>
+                <button class="nav-button" id="prevBtn">Назад</button>
+                <button class="nav-button" id="nextBtn">Вперёд</button>
             </div>
         `;
         
@@ -128,8 +132,6 @@ function updateCard() {
     document.getElementById('arabic').textContent = word.arabic;
     document.getElementById('phonetic').textContent = word.phonetic;
     document.getElementById('russian').textContent = word.russian;
-    document.getElementById('image').src = word.image;
-    document.getElementById('image').alt = word.russian;
     document.getElementById('categoryBadge').textContent = word.category;
     currentEl.textContent = currentIndex + 1;
     totalEl.textContent = filteredWords.length;
@@ -139,18 +141,18 @@ function updateCard() {
     document.getElementById('nextBtn').disabled = currentIndex === filteredWords.length - 1;
 }
 
+// Play audio using TTS
 async function playAudio() {
     if (filteredWords.length === 0) return;
     
     const word = filteredWords[currentIndex];
     const button = document.getElementById('playAudio');
     
-    // Disable button while loading
     button.disabled = true;
-    button.textContent = '⏳ Загрузка...';
+    button.textContent = 'Загрузка...';
     
     try {
-        // Use Hugging Face Inference API for Facebook MMS TTS
+        // Try Facebook MMS TTS first
         const response = await fetch(
             "https://api-inference.huggingface.co/models/facebook/mms-tts-ara",
             {
@@ -175,17 +177,20 @@ async function playAudio() {
         audio.onended = () => {
             URL.revokeObjectURL(audioUrl);
             button.disabled = false;
-            button.textContent = '🔊 Слушать';
+            button.textContent = 'Слушать';
         };
         
         audio.onerror = () => {
             throw new Error('Audio playback failed');
         };
         
+        console.log('Playing MMS TTS audio for:', word.arabic);
         await audio.play();
         
     } catch (error) {
-        console.error('TTS Error:', error);
+        console.error('MMS TTS Error:', error);
+        console.log('Falling back to browser TTS');
+        
         // Fallback to browser TTS
         const utterance = new SpeechSynthesisUtterance(word.arabic);
         utterance.lang = 'ar-SA';
@@ -194,13 +199,14 @@ async function playAudio() {
         
         utterance.onend = () => {
             button.disabled = false;
-            button.textContent = '🔊 Слушать';
+            button.textContent = 'Слушать';
         };
         
         speechSynthesis.speak(utterance);
     }
 }
 
+// Navigate to previous word
 function prevWord() {
     if (currentIndex > 0) {
         currentIndex--;
@@ -208,6 +214,7 @@ function prevWord() {
     }
 }
 
+// Navigate to next word
 function nextWord() {
     if (currentIndex < filteredWords.length - 1) {
         currentIndex++;
@@ -244,5 +251,5 @@ document.addEventListener('keydown', (e) => {
     }
 });
 
-// Load vocabulary on page load
+// Start the app
 loadVocabulary();
