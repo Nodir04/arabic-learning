@@ -3,48 +3,38 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Arabic–Russian Vocabulary Trainer</title>
-  <link rel="stylesheet" href="styles.css"/>
+  <title>Arabic–Russian Vocabulary</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+
   <header>
-    <h1>📚 Arabic–Russian Vocabulary Trainer</h1>
+    <h1>📚 Arabic–Russian Vocabulary</h1>
+    <div class="controls">
+      <select id="category-select">
+        <option value="">-- Choose Category --</option>
+      </select>
+      <input type="text" id="search-input" placeholder="🔍 Search by Russian..." />
+    </div>
   </header>
 
-  <section class="controls">
-    <div class="dropdown-container">
-      <label for="categorySelect">Category:</label>
-      <select id="categorySelect"></select>
-    </div>
-
-    <div class="search-container">
-      <input type="text" id="searchInput" placeholder="🔍 Search by Russian translation..."/>
-    </div>
-  </section>
-
   <main>
-    <div class="card">
-      <div id="arabicWord" class="arabic-word">كلمة</div>
-      <div id="transliteration" class="transliteration">kalima</div>
-      <div id="russianTranslation" class="russian-translation">слово</div>
-      
-      <button id="ttsButton" class="tts-button" title="Pronounce">🔊 Pronounce</button>
-    </div>
+    <div class="word-card">
+      <div id="arabic-word" class="arabic-word">---</div>
+      <div id="transliteration" class="transliteration">---</div>
+      <div id="russian-translation" class="translation">---</div>
 
-    <div class="nav-buttons">
-      <button id="prevButton" class="nav-btn">⬅ Previous</button>
-      <button id="nextButton" class="nav-btn">Next ➡</button>
+      <button id="tts-btn" class="tts-btn">🔊 Pronounce</button>
+
+      <div class="nav-buttons">
+        <button id="prev-btn">⬅ Previous</button>
+        <button id="next-btn">Next ➡</button>
+      </div>
     </div>
   </main>
 
   <footer>
-    <p>🇸🇦 + 🇷🇺 Arabic–Russian Vocabulary App | Built with ❤️</p>
-    <p>
-      <small>
-        Optional: set your Hugging Face API Key in <code>script.js</code> to use MMS TTS.<br>
-        Otherwise, browser TTS will be used by default.
-      </small>
-    </p>
+    <p>Made with ❤️ for learning Arabic</p>
   </footer>
 
   <script src="script.js"></script>
