@@ -1,176 +1,115 @@
-/* Global reset and base styles */
 * {
-  margin: 0;
-  padding: 0;
   box-sizing: border-box;
 }
 
-html {
-  font-size: 16px;
-  font-family: 'Segoe UI', Tahoma, sans-serif;
-  background-color: #f7f8fa;
-  color: #333;
-}
-
 body {
+  font-family: "Segoe UI", Tahoma, sans-serif;
+  background: #f6f8fa;
+  margin: 0;
+  padding: 0;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
 }
 
-/* Header */
 header {
-  background: linear-gradient(135deg, #007bff, #00c6ff);
+  background: #1e90ff;
   color: white;
+  padding: 1rem;
   text-align: center;
-  padding: 1rem 0;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
 
 header h1 {
-  font-size: 1.5rem;
-  letter-spacing: 1px;
+  margin: 0 0 0.5rem;
 }
 
-/* Controls (Category + Search) */
 .controls {
   display: flex;
+  gap: 0.5rem;
   justify-content: center;
   flex-wrap: wrap;
-  gap: 1rem;
-  background-color: #fff;
-  padding: 1rem;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
 }
 
-.dropdown-container,
-.search-container {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-#categorySelect,
-#searchInput {
+select, input[type="text"] {
   padding: 0.5rem;
   font-size: 1rem;
-  border-radius: 0.375rem;
-  border: 1px solid #ccc;
+  border: none;
+  border-radius: 6px;
   min-width: 180px;
-  outline: none;
-  transition: border-color 0.3s ease;
 }
 
-#categorySelect:focus,
-#searchInput:focus {
-  border-color: #007bff;
-}
-
-/* Main card */
 main {
   flex: 1;
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  padding: 2rem 1rem;
+  align-items: center;
+  padding: 1rem;
 }
 
-.card {
-  background-color: white;
+.word-card {
+  background: white;
   padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
   max-width: 400px;
   width: 100%;
-  border-radius: 1rem;
   text-align: center;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
-  margin-bottom: 1.5rem;
 }
 
 .arabic-word {
-  font-size: 2.5rem;
-  font-family: 'Amiri', 'Scheherazade', serif;
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
   direction: rtl;
-  margin-bottom: 1rem;
-  color: #222;
 }
 
 .transliteration {
   font-size: 1.2rem;
   color: #555;
   margin-bottom: 0.5rem;
-  font-style: italic;
 }
 
-.russian-translation {
-  font-size: 1.3rem;
-  color: #007bff;
+.translation {
+  font-size: 1.2rem;
+  color: #333;
   margin-bottom: 1rem;
 }
 
-.tts-button {
-  background-color: #007bff;
+.tts-btn {
+  background: #1e90ff;
   color: white;
   border: none;
+  border-radius: 6px;
   padding: 0.5rem 1rem;
   font-size: 1rem;
-  border-radius: 0.5rem;
   cursor: pointer;
-  transition: background-color 0.3s ease;
 }
 
-.tts-button:hover {
-  background-color: #0056b3;
+.tts-btn:hover {
+  background: #0d6efd;
 }
 
-/* Navigation buttons */
 .nav-buttons {
+  margin-top: 1rem;
   display: flex;
-  justify-content: center;
-  gap: 1rem;
+  justify-content: space-between;
 }
 
-.nav-btn {
-  background-color: #00c6ff;
-  color: white;
+.nav-buttons button {
+  background: #eee;
   border: none;
+  border-radius: 6px;
   padding: 0.5rem 1rem;
-  font-size: 1rem;
-  border-radius: 0.5rem;
   cursor: pointer;
-  transition: background-color 0.3s ease;
 }
 
-.nav-btn:hover {
-  background-color: #0099cc;
+.nav-buttons button:hover {
+  background: #ddd;
 }
 
-/* Footer */
 footer {
   text-align: center;
-  padding: 1rem;
-  background-color: #f1f3f5;
+  padding: 0.5rem;
   font-size: 0.9rem;
-  color: #666;
-}
-
-footer code {
-  background: #eee;
-  padding: 0.1rem 0.3rem;
-  border-radius: 0.3rem;
-}
-
-/* Responsive */
-@media (max-width: 600px) {
-  header h1 {
-    font-size: 1.2rem;
-  }
-
-  .card {
-    padding: 1.5rem 1rem;
-  }
-
-  .arabic-word {
-    font-size: 2rem;
-  }
+  background: #f0f0f0;
 }
