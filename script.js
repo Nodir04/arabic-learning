@@ -1,151 +1,154 @@
-// =======================
-// ⚙️ Optional: MMS TTS Settings
-// =======================
-// If you want to use Hugging Face MMS TTS backend, set your API endpoint here.
-// Example: const MMS_TTS_API = "http://localhost:8000/tts";
-const MMS_TTS_API = ""; // leave empty to use browser TTS fallback
+// ================================
+// Arabic–Russian Vocabulary App
+// ================================
 
-// =======================
-// 🌐 Load Vocabulary JSON
-// =======================
 let vocabulary = {};
-let currentCategory = "";
-let currentWordList = [];
+let currentCategory = null;
 let currentIndex = 0;
+let arabicVoice = null;
 
-const categorySelect = document.getElementById("categorySelect");
-const searchInput = document.getElementById("searchInput");
-const arabicWordEl = document.getElementById("arabicWord");
-const transliterationEl = document.getElementById("transliteration");
-const russianTranslationEl = document.getElementById("russianTranslation");
-const ttsButton = document.getElementById("ttsButton");
-const prevButton = document.getElementById("prevButton");
-const nextButton = document.getElementById("nextButton");
-
-fetch("vocabulary.json")
-  .then(res => res.json())
+// -------------------------------
+// Load Vocabulary JSON
+// -------------------------------
+fetch('vocabulary.json')
+  .then(response => response.json())
   .then(data => {
     vocabulary = data;
-    populateCategories();
-    selectDefaultCategory();
+    populateCategoryDropdown();
+    // Load the first category by default
+    const firstCategory = Object.keys(vocabulary)[0];
+    if (firstCategory) {
+      currentCategory = firstCategory;
+      displayWord(0);
+    }
   })
-  .catch(err => {
-    console.error("Failed to load vocabulary.json", err);
-  });
+  .catch(err => console.error('Error loading vocabulary.json:', err));
 
-// =======================
-// 🧭 Category & Search
-// =======================
-function populateCategories() {
+// -------------------------------
+// Populate Category Dropdown
+// -------------------------------
+function populateCategoryDropdown() {
+  const categorySelect = document.getElementById('categorySelect');
+  categorySelect.innerHTML = '';
+
   Object.keys(vocabulary).forEach(category => {
-    const option = document.createElement("option");
+    const option = document.createElement('option');
     option.value = category;
     option.textContent = category;
     categorySelect.appendChild(option);
   });
+
+  categorySelect.addEventListener('change', () => {
+    currentCategory = categorySelect.value;
+    currentIndex = 0;
+    displayWord(currentIndex);
+  });
 }
 
-function selectDefaultCategory() {
-  if (Object.keys(vocabulary).length > 0) {
-    currentCategory = Object.keys(vocabulary)[0];
-    categorySelect.value = currentCategory;
-    updateWordList();
-    displayCurrentWord();
-  }
-}
+// -------------------------------
+// Display Current Word
+// -------------------------------
+function displayWord(index) {
+  const arabicEl = document.getElementById('arabicWord');
+  const translitEl = document.getElementById('transliteration');
+  const russianEl = document.getElementById('translation');
 
-categorySelect.addEventListener("change", () => {
-  currentCategory = categorySelect.value;
-  searchInput.value = "";
-  updateWordList();
-  displayCurrentWord();
-});
-
-searchInput.addEventListener("input", () => {
-  updateWordList(searchInput.value.trim().toLowerCase());
-  currentIndex = 0;
-  displayCurrentWord();
-});
-
-// =======================
-// 📝 Word Display Logic
-// =======================
-function updateWordList(searchTerm = "") {
-  let words = vocabulary[currentCategory] || [];
-  if (searchTerm) {
-    words = words.filter(w => w.russian.toLowerCase().includes(searchTerm));
-  }
-  currentWordList = words;
-  currentIndex = 0;
-}
-
-function displayCurrentWord() {
-  if (currentWordList.length === 0) {
-    arabicWordEl.textContent = "—";
-    transliterationEl.textContent = "No words found";
-    russianTranslationEl.textContent = "";
+  if (!currentCategory || !vocabulary[currentCategory] || vocabulary[currentCategory].length === 0) {
+    arabicEl.textContent = '—';
+    translitEl.textContent = '';
+    russianEl.textContent = 'Нет слов в этой категории';
     return;
   }
 
-  const word = currentWordList[currentIndex];
-  arabicWordEl.textContent = word.arabic;
-  transliterationEl.textContent = word.transliteration;
-  russianTranslationEl.textContent = word.russian;
+  const words = vocabulary[currentCategory];
+  const word = words[index];
+
+  arabicEl.textContent = word.arabic;
+  translitEl.textContent = word.transliteration;
+  russianEl.textContent = word.russian;
 }
 
-// =======================
-// ⏩ Navigation Buttons
-// =======================
-nextButton.addEventListener("click", () => {
-  if (currentWordList.length === 0) return;
-  currentIndex = (currentIndex + 1) % currentWordList.length;
-  displayCurrentWord();
+// -------------------------------
+// Navigation Buttons
+// -------------------------------
+document.getElementById('nextBtn').addEventListener('click', () => {
+  if (!currentCategory) return;
+  const words = vocabulary[currentCategory];
+  currentIndex = (currentIndex + 1) % words.length;
+  displayWord(currentIndex);
 });
 
-prevButton.addEventListener("click", () => {
-  if (currentWordList.length === 0) return;
-  currentIndex = (currentIndex - 1 + currentWordList.length) % currentWordList.length;
-  displayCurrentWord();
+document.getElementById('prevBtn').addEventListener('click', () => {
+  if (!currentCategory) return;
+  const words = vocabulary[currentCategory];
+  currentIndex = (currentIndex - 1 + words.length) % words.length;
+  displayWord(currentIndex);
 });
 
-// =======================
-// 🔊 Text-to-Speech
-// =======================
-ttsButton.addEventListener("click", () => {
-  if (currentWordList.length === 0) return;
-  const text = currentWordList[currentIndex].arabic;
-  if (MMS_TTS_API) {
-    playMMSAudio(text);
-  } else {
-    playBrowserTTS(text);
+// -------------------------------
+// Search by Russian Translation
+// -------------------------------
+document.getElementById('searchInput').addEventListener('input', (e) => {
+  const query = e.target.value.trim().toLowerCase();
+
+  if (query === '') {
+    // reset to current category
+    currentIndex = 0;
+    displayWord(currentIndex);
+    return;
+  }
+
+  // Find the first match in all categories
+  for (const category in vocabulary) {
+    const matchIndex = vocabulary[category].findIndex(word =>
+      word.russian.toLowerCase().includes(query)
+    );
+    if (matchIndex !== -1) {
+      currentCategory = category;
+      document.getElementById('categorySelect').value = category;
+      currentIndex = matchIndex;
+      displayWord(currentIndex);
+      break;
+    }
   }
 });
 
-// ---- Browser TTS fallback ----
-function playBrowserTTS(text) {
+// -------------------------------
+// Text-to-Speech (Browser)
+// -------------------------------
+function loadVoices() {
+  const voices = window.speechSynthesis.getVoices();
+  arabicVoice = voices.find(v => v.lang.toLowerCase().startsWith('ar'));
+}
+
+// Chrome loads voices asynchronously
+if (typeof speechSynthesis !== 'undefined') {
+  speechSynthesis.onvoiceschanged = loadVoices;
+  loadVoices();
+}
+
+function playTTS(text) {
+  if (!('speechSynthesis' in window)) {
+    alert('Text-to-Speech is not supported in this browser.');
+    return;
+  }
+
   const utterance = new SpeechSynthesisUtterance(text);
-  utterance.lang = "ar-SA";
+  utterance.lang = 'ar-SA';
+
+  if (arabicVoice) {
+    utterance.voice = arabicVoice;
+  } else {
+    console.warn('No Arabic voice found. Using default voice.');
+  }
+
+  speechSynthesis.cancel(); // stop previous speech
   speechSynthesis.speak(utterance);
 }
 
-// ---- Hugging Face MMS TTS backend ----
-async function playMMSAudio(text) {
-  try {
-    const response = await fetch(MMS_TTS_API, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ text })
-    });
-
-    if (!response.ok) throw new Error("MMS TTS API error");
-    const blob = await response.blob();
-    const audioUrl = URL.createObjectURL(blob);
-    const audio = new Audio(audioUrl);
-    audio.play();
-  } catch (err) {
-    console.error("Failed to fetch MMS TTS audio:", err);
-    playBrowserTTS(text);
+document.getElementById('ttsBtn').addEventListener('click', () => {
+  const word = document.getElementById('arabicWord').textContent;
+  if (word && word !== '—') {
+    playTTS(word);
   }
-}
+});
