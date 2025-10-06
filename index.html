@@ -1,36 +1,52 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Арабский язык — Учебник</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Arabic–Russian Vocabulary Trainer</title>
+  <link rel="stylesheet" href="styles.css"/>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>Арабский язык</h1>
-            <input type="text" class="search-box" id="searchBox" placeholder="Поиск по-русски...">
-            <select class="category-select" id="categorySelect">
-                <option value="all">Все категории</option>
-            </select>
-            <div class="progress">Слово <span id="current">1</span> из <span id="total">0</span></div>
-        </div>
+  <header>
+    <h1>📚 Arabic–Russian Vocabulary Trainer</h1>
+  </header>
 
-        <div id="cardContainer">
-            <div class="card">
-                <div class="category-badge" id="categoryBadge"></div>
-                <div class="arabic-word" id="arabic"></div>
-                <div class="phonetic" id="phonetic"></div>
-                <div class="russian-word" id="russian"></div>
-                <button class="audio-button" id="playAudio">Слушать</button>
-            </div>
-            <div class="navigation">
-                <button class="nav-button" id="prevBtn">Назад</button>
-                <button class="nav-button" id="nextBtn">Вперёд</button>
-            </div>
-        </div>
+  <section class="controls">
+    <div class="dropdown-container">
+      <label for="categorySelect">Category:</label>
+      <select id="categorySelect"></select>
     </div>
-    <script src="app.js"></script>
+
+    <div class="search-container">
+      <input type="text" id="searchInput" placeholder="🔍 Search by Russian translation..."/>
+    </div>
+  </section>
+
+  <main>
+    <div class="card">
+      <div id="arabicWord" class="arabic-word">كلمة</div>
+      <div id="transliteration" class="transliteration">kalima</div>
+      <div id="russianTranslation" class="russian-translation">слово</div>
+      
+      <button id="ttsButton" class="tts-button" title="Pronounce">🔊 Pronounce</button>
+    </div>
+
+    <div class="nav-buttons">
+      <button id="prevButton" class="nav-btn">⬅ Previous</button>
+      <button id="nextButton" class="nav-btn">Next ➡</button>
+    </div>
+  </main>
+
+  <footer>
+    <p>🇸🇦 + 🇷🇺 Arabic–Russian Vocabulary App | Built with ❤️</p>
+    <p>
+      <small>
+        Optional: set your Hugging Face API Key in <code>script.js</code> to use MMS TTS.<br>
+        Otherwise, browser TTS will be used by default.
+      </small>
+    </p>
+  </footer>
+
+  <script src="script.js"></script>
 </body>
 </html>
