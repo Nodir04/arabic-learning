@@ -9,8 +9,8 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>📚 Арабский язык</h1>
-            <input type="text" class="search-box" id="searchBox" placeholder="🔍 Поиск по-русски...">
+            <h1>Арабский язык</h1>
+            <input type="text" class="search-box" id="searchBox" placeholder="Поиск по-русски...">
             <select class="category-select" id="categorySelect">
                 <option value="all">Все категории</option>
             </select>
@@ -19,26 +19,18 @@
 
         <div id="cardContainer">
             <div class="card">
-                <div class="category-badge" id="categoryBadge">Фрукты</div>
-                <div class="arabic-word" id="arabic">تُفَّاحَة</div>
-                <div class="phonetic" id="phonetic">tuffāḥa</div>
-                
-                <div class="image-container">
-                    <img class="word-image" id="image" src="https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=400" alt="яблоко">
-                </div>
-
-                <div class="russian-word" id="russian">яблоко</div>
-
-                <button class="audio-button" id="playAudio">🔊 Слушать</button>
+                <div class="category-badge" id="categoryBadge"></div>
+                <div class="arabic-word" id="arabic"></div>
+                <div class="phonetic" id="phonetic"></div>
+                <div class="russian-word" id="russian"></div>
+                <button class="audio-button" id="playAudio">Слушать</button>
             </div>
-
             <div class="navigation">
-                <button class="nav-button" id="prevBtn">← Назад</button>
-                <button class="nav-button" id="nextBtn">Вперёд →</button>
+                <button class="nav-button" id="prevBtn">Назад</button>
+                <button class="nav-button" id="nextBtn">Вперёд</button>
             </div>
         </div>
     </div>
-
-    <script src="script.js"></script>
+    <script src="app.js"></script>
 </body>
 </html>
