@@ -46,10 +46,6 @@ body {
     margin-bottom: 15px;
 }
 
-.search-box::placeholder {
-    color: #a0aec0;
-}
-
 .category-select {
     width: 100%;
     padding: 12px 20px;
@@ -69,7 +65,7 @@ body {
 }
 
 .card {
-    padding: 40px 30px;
+    padding: 60px 30px;
     text-align: center;
 }
 
@@ -77,61 +73,45 @@ body {
     display: inline-block;
     background: #edf2f7;
     color: #667eea;
-    padding: 6px 16px;
+    padding: 8px 20px;
     border-radius: 20px;
     font-size: 14px;
     font-weight: 600;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
 }
 
 .arabic-word {
-    font-size: 56px;
+    font-size: 64px;
     color: #2d3748;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
     font-weight: bold;
     direction: rtl;
 }
 
 .phonetic {
-    font-size: 18px;
+    font-size: 20px;
     color: #718096;
-    margin-bottom: 25px;
+    margin-bottom: 35px;
     font-style: italic;
 }
 
-.image-container {
-    margin: 25px 0;
-    height: 180px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.word-image {
-    max-width: 100%;
-    max-height: 180px;
-    border-radius: 15px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-}
-
 .russian-word {
-    font-size: 32px;
+    font-size: 36px;
     color: #2d3748;
     font-weight: 600;
-    margin-bottom: 30px;
+    margin-bottom: 40px;
 }
 
 .audio-button {
     background: #48bb78;
     color: white;
     border: none;
-    padding: 15px 40px;
+    padding: 16px 45px;
     font-size: 18px;
     border-radius: 50px;
     cursor: pointer;
     transition: all 0.3s;
     box-shadow: 0 4px 15px rgba(72, 187, 120, 0.4);
-    margin-bottom: 30px;
 }
 
 .audio-button:active {
@@ -141,7 +121,6 @@ body {
 .audio-button:disabled {
     background: #cbd5e0;
     cursor: not-allowed;
-    box-shadow: none;
 }
 
 .navigation {
@@ -165,7 +144,6 @@ body {
 
 .nav-button:active {
     transform: scale(0.95);
-    background: #5568d3;
 }
 
 .nav-button:disabled {
@@ -182,14 +160,12 @@ body {
 
 @media (max-width: 480px) {
     .arabic-word {
-        font-size: 48px;
+        font-size: 52px;
     }
-
     .russian-word {
-        font-size: 28px;
+        font-size: 30px;
     }
-
     .card {
-        padding: 30px 20px;
+        padding: 40px 20px;
     }
 }
