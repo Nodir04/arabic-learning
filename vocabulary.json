@@ -1,72 +1,26 @@
 {
-  "Body Parts": [
-    { "id": 1, "arabic": "رَأْسٌ", "transliteration": "raʾsun", "russian": "голова" },
-    { "id": 2, "arabic": "يَدٌ", "transliteration": "yadun", "russian": "рука" },
-    { "id": 3, "arabic": "عَيْنٌ", "transliteration": "ʿaynun", "russian": "глаз" },
-    { "id": 4, "arabic": "أُذُنٌ", "transliteration": "ʾudhunun", "russian": "ухо" },
-    { "id": 5, "arabic": "قَدَمٌ", "transliteration": "qadamun", "russian": "нога (ступня)" }
-  ],
   "Fruits": [
-    { "id": 1, "arabic": "تُفَّاحَةٌ", "transliteration": "tuffāḥatun", "russian": "яблоко" },
-    { "id": 2, "arabic": "مَوْزَةٌ", "transliteration": "mawzatun", "russian": "банан" },
-    { "id": 3, "arabic": "بُرْتُقَالَةٌ", "transliteration": "burtuqālatun", "russian": "апельсин" },
-    { "id": 4, "arabic": "عِنَبٌ", "transliteration": "ʿinabun", "russian": "виноград" },
-    { "id": 5, "arabic": "فَرَاوَلَةٌ", "transliteration": "farāwalatun", "russian": "клубника" }
-  ],
-  "Vegetables": [
-    { "id": 1, "arabic": "جَزَرَةٌ", "transliteration": "jazaratun", "russian": "морковь" },
-    { "id": 2, "arabic": "بَصَلَةٌ", "transliteration": "baṣalatun", "russian": "лук" },
-    { "id": 3, "arabic": "طَمَاطِمُ", "transliteration": "ṭamāṭimu", "russian": "помидор" },
-    { "id": 4, "arabic": "خِيَارٌ", "transliteration": "khiyārun", "russian": "огурец" },
-    { "id": 5, "arabic": "بَطَاطِسُ", "transliteration": "baṭāṭisu", "russian": "картофель" }
+    {
+      "arabic": "تُفَّاحٌ",
+      "transliteration": "tuffāḥun",
+      "russian": "яблоко"
+    },
+    {
+      "arabic": "مَوْزٌ",
+      "transliteration": "mawzun",
+      "russian": "банан"
+    }
   ],
   "Animals": [
-    { "id": 1, "arabic": "قِطٌّ", "transliteration": "qiṭṭun", "russian": "кот" },
-    { "id": 2, "arabic": "كَلْبٌ", "transliteration": "kalbun", "russian": "собака" },
-    { "id": 3, "arabic": "حِصَانٌ", "transliteration": "ḥiṣānun", "russian": "лошадь" },
-    { "id": 4, "arabic": "بَقَرَةٌ", "transliteration": "baqaratun", "russian": "корова" },
-    { "id": 5, "arabic": "طَيْرٌ", "transliteration": "ṭayrun", "russian": "птица" }
-  ],
-  "House and Furniture": [
-    { "id": 1, "arabic": "بَيْتٌ", "transliteration": "baytun", "russian": "дом" },
-    { "id": 2, "arabic": "سَرِيرٌ", "transliteration": "sarīrun", "russian": "кровать" },
-    { "id": 3, "arabic": "كُرْسِيٌّ", "transliteration": "kursiyyun", "russian": "стул" },
-    { "id": 4, "arabic": "مَطْبَخٌ", "transliteration": "maṭbakun", "russian": "кухня" },
-    { "id": 5, "arabic": "نَافِذَةٌ", "transliteration": "nāfidhatun", "russian": "окно" }
-  ],
-  "Food and Drinks": [
-    { "id": 1, "arabic": "مَاءٌ", "transliteration": "māʾun", "russian": "вода" },
-    { "id": 2, "arabic": "خُبْزٌ", "transliteration": "khubzun", "russian": "хлеб" },
-    { "id": 3, "arabic": "حَلِيبٌ", "transliteration": "ḥalībun", "russian": "молоко" },
-    { "id": 4, "arabic": "لَحْمٌ", "transliteration": "laḥmun", "russian": "мясо" },
-    { "id": 5, "arabic": "أَرُزٌّ", "transliteration": "ʾaruzzun", "russian": "рис" }
-  ],
-  "Nature": [
-    { "id": 1, "arabic": "شَمْسٌ", "transliteration": "shamsun", "russian": "солнце" },
-    { "id": 2, "arabic": "قَمَرٌ", "transliteration": "qamarun", "russian": "луна" },
-    { "id": 3, "arabic": "سَمَاءٌ", "transliteration": "samāʾun", "russian": "небо" },
-    { "id": 4, "arabic": "بَحْرٌ", "transliteration": "baḥrun", "russian": "море" },
-    { "id": 5, "arabic": "جَبَلٌ", "transliteration": "jabalun", "russian": "гора" }
-  ],
-  "Numbers": [
-    { "id": 1, "arabic": "وَاحِدٌ", "transliteration": "wāḥidun", "russian": "один" },
-    { "id": 2, "arabic": "اِثْنَانِ", "transliteration": "ithnān", "russian": "два" },
-    { "id": 3, "arabic": "ثَلَاثَةٌ", "transliteration": "thalāthatun", "russian": "три" },
-    { "id": 4, "arabic": "أَرْبَعَةٌ", "transliteration": "ʾarbaʿatun", "russian": "четыре" },
-    { "id": 5, "arabic": "خَمْسَةٌ", "transliteration": "khamsatun", "russian": "пять" }
-  ],
-  "Colors": [
-    { "id": 1, "arabic": "أَبْيَضُ", "transliteration": "ʾabyaḍu", "russian": "белый" },
-    { "id": 2, "arabic": "أَسْوَدُ", "transliteration": "ʾaswadu", "russian": "чёрный" },
-    { "id": 3, "arabic": "أَحْمَرُ", "transliteration": "ʾaḥmaru", "russian": "красный" },
-    { "id": 4, "arabic": "أَزْرَقُ", "transliteration": "ʾazraqu", "russian": "синий" },
-    { "id": 5, "arabic": "أَصْفَرُ", "transliteration": "ʾaṣfaru", "russian": "жёлтый" }
-  ],
-  "Family": [
-    { "id": 1, "arabic": "أَبٌ", "transliteration": "ʾabun", "russian": "отец" },
-    { "id": 2, "arabic": "أُمٌّ", "transliteration": "ʾummun", "russian": "мать" },
-    { "id": 3, "arabic": "أَخٌ", "transliteration": "ʾakhun", "russian": "брат" },
-    { "id": 4, "arabic": "أُخْتٌ", "transliteration": "ʾukhtun", "russian": "сестра" },
-    { "id": 5, "arabic": "طِفْلٌ", "transliteration": "ṭiflun", "russian": "ребёнок" }
+    {
+      "arabic": "قِطٌّ",
+      "transliteration": "qiṭṭun",
+      "russian": "кот"
+    },
+    {
+      "arabic": "كَلْبٌ",
+      "transliteration": "kalbun",
+      "russian": "собака"
+    }
   ]
 }
