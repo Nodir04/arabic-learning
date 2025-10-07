@@ -3,6 +3,7 @@ let currentCategory = '';
 let currentWords = [];
 let currentIndex = 0;
 let allWords = [];
+let voices = [];
 
 // DOM Elements
 const categorySelect = document.getElementById('categorySelect');
@@ -11,6 +12,23 @@ const wordCard = document.getElementById('wordCard');
 const prevBtn = document.getElementById('prevBtn');
 const nextBtn = document.getElementById('nextBtn');
 const wordCounter = document.getElementById('wordCounter');
+
+// Load voices when they're ready
+function loadVoices() {
+    voices = window.speechSynthesis.getVoices();
+    console.log('Available voices:', voices.length);
+    voices.forEach(voice => {
+        if (voice.lang.startsWith('ar')) {
+            console.log('Arabic voice found:', voice.name, voice.lang);
+        }
+    });
+}
+
+// Load voices immediately and on voices changed event
+if ('speechSynthesis' in window) {
+    loadVoices();
+    window.speechSynthesis.onvoiceschanged = loadVoices;
+}
 
 // Load vocabulary from JSON
 async function loadVocabulary() {
@@ -86,34 +104,38 @@ function displayWord() {
 
 // Text-to-Speech function
 async function pronounceWord(arabicText) {
-    // Try browser's built-in TTS (works for Arabic in most modern browsers)
-    if ('speechSynthesis' in window) {
-        // Cancel any ongoing speech
-        window.speechSynthesis.cancel();
-        
-        const utterance = new SpeechSynthesisUtterance(arabicText);
-        utterance.lang = 'ar-SA'; // Arabic (Saudi Arabia)
-        utterance.rate = 0.8; // Slightly slower for learning
-        utterance.pitch = 1;
-        
-        // Try to find an Arabic voice
-        const voices = window.speechSynthesis.getVoices();
-        const arabicVoice = voices.find(voice => voice.lang.startsWith('ar'));
-        if (arabicVoice) {
-            utterance.voice = arabicVoice;
-        }
-        
-        window.speechSynthesis.speak(utterance);
-    } else {
+    if (!('speechSynthesis' in window)) {
         alert('К сожалению, ваш браузер не поддерживает озвучивание');
+        return;
     }
-}
 
-// Load voices when they're ready (for some browsers)
-if ('speechSynthesis' in window) {
-    window.speechSynthesis.onvoiceschanged = () => {
-        window.speechSynthesis.getVoices();
-    };
+    // Cancel any ongoing speech
+    window.speechSynthesis.cancel();
+    
+    // Small delay to ensure cancel completes
+    await new Promise(resolve => setTimeout(resolve, 100));
+    
+    const utterance = new SpeechSynthesisUtterance(arabicText);
+    utterance.lang = 'ar-SA'; // Arabic (Saudi Arabia)
+    utterance.rate = 0.75; // Slower for learning
+    utterance.pitch = 1;
+    utterance.volume = 1;
+    
+    // Try to find an Arabic voice
+    const arabicVoice = voices.find(voice => voice.lang.startsWith('ar'));
+    if (arabicVoice) {
+        utterance.voice = arabicVoice;
+        console.log('Using voice:', arabicVoice.name);
+    } else {
+        console.log('No Arabic voice found, using default');
+    }
+    
+    // Add event listeners for debugging
+    utterance.onstart = () => console.log('Speech started');
+    utterance.onend = () => console.log('Speech ended');
+    utterance.onerror = (e) => console.error('Speech error:', e);
+    
+    window.speechSynthesis.speak(utterance);
 }
 
 // Update navigation buttons and counter
