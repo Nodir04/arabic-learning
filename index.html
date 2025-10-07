@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arabic-Russian Vocabulary Learning App</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>تعلم العربية - Учим арабский</h1>
+            <p class="subtitle">Arabic-Russian Vocabulary Learning</p>
+        </header>
+
+        <div class="controls">
+            <div class="control-group">
+                <label for="categorySelect">Категория:</label>
+                <select id="categorySelect">
+                    <option value="">Загрузка...</option>
+                </select>
+            </div>
+
+            <div class="control-group">
+                <label for="searchInput">Поиск (по-русски):</label>
+                <input type="text" id="searchInput" placeholder="Введите слово по-русски...">
+            </div>
+        </div>
+
+        <div class="card" id="wordCard">
+            <div class="loading">Загрузка словаря...</div>
+        </div>
+
+        <div class="navigation">
+            <button id="prevBtn" class="nav-btn">← Предыдущее</button>
+            <span id="wordCounter" class="counter">0 / 0</span>
+            <button id="nextBtn" class="nav-btn">Следующее →</button>
+        </div>
+
+        <footer>
+            <p>Designed for Arabic learners | 2025</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

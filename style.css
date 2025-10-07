@@ -1,0 +1,239 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.container {
+    max-width: 800px;
+    width: 100%;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+}
+
+header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 30px;
+    text-align: center;
+}
+
+header h1 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+.subtitle {
+    font-size: 0.95rem;
+    opacity: 0.95;
+}
+
+.controls {
+    padding: 25px 30px;
+    background: #f8f9fa;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.control-group {
+    margin-bottom: 15px;
+}
+
+.control-group:last-child {
+    margin-bottom: 0;
+}
+
+.control-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #495057;
+    font-size: 0.9rem;
+}
+
+select, input[type="text"] {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid #dee2e6;
+    border-radius: 10px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background: white;
+}
+
+select:focus, input[type="text"]:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.card {
+    padding: 40px 30px;
+    min-height: 350px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.loading {
+    color: #6c757d;
+    font-size: 1.1rem;
+}
+
+.word-content {
+    width: 100%;
+}
+
+.arabic-word {
+    font-size: 3.5rem;
+    font-weight: 700;
+    color: #2d3748;
+    margin-bottom: 15px;
+    font-family: 'Traditional Arabic', 'Amiri', serif;
+    line-height: 1.4;
+}
+
+.phonetic {
+    font-size: 1.3rem;
+    color: #718096;
+    margin-bottom: 20px;
+    font-style: italic;
+}
+
+.russian {
+    font-size: 1.8rem;
+    color: #667eea;
+    font-weight: 600;
+    margin-bottom: 25px;
+}
+
+.pronounce-btn {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    font-size: 1.1rem;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+}
+
+.pronounce-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+}
+
+.pronounce-btn:active {
+    transform: translateY(0);
+}
+
+.no-results {
+    color: #e74c3c;
+    font-size: 1.1rem;
+}
+
+.navigation {
+    padding: 25px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f8f9fa;
+    border-top: 1px solid #e9ecef;
+}
+
+.nav-btn {
+    background: white;
+    border: 2px solid #667eea;
+    color: #667eea;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.nav-btn:hover:not(:disabled) {
+    background: #667eea;
+    color: white;
+    transform: translateY(-2px);
+}
+
+.nav-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.counter {
+    font-weight: 600;
+    color: #495057;
+    font-size: 1rem;
+}
+
+footer {
+    background: #2d3748;
+    color: white;
+    text-align: center;
+    padding: 15px;
+    font-size: 0.9rem;
+}
+
+@media (max-width: 600px) {
+    header h1 {
+        font-size: 1.5rem;
+    }
+
+    .arabic-word {
+        font-size: 2.5rem;
+    }
+
+    .phonetic {
+        font-size: 1.1rem;
+    }
+
+    .russian {
+        font-size: 1.4rem;
+    }
+
+    .controls {
+        padding: 20px;
+    }
+
+    .card {
+        padding: 30px 20px;
+        min-height: 300px;
+    }
+
+    .navigation {
+        padding: 20px;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .nav-btn {
+        padding: 8px 15px;
+        font-size: 0.9rem;
+    }
+
+    .counter {
+        width: 100%;
+        text-align: center;
+        order: -1;
+        margin-bottom: 10px;
+    }
+}
