@@ -17,10 +17,10 @@ const wordCounter = document.getElementById('wordCounter');
 function loadVoices() {
     voices = window.speechSynthesis.getVoices();
     console.log('Available voices:', voices.length);
-    voices.forEach(voice => {
-        if (voice.lang.startsWith('ar')) {
-            console.log('Arabic voice found:', voice.name, voice.lang);
-        }
+    const arabicVoices = voices.filter(voice => voice.lang.startsWith('ar'));
+    console.log('Arabic voices found:', arabicVoices.length);
+    arabicVoices.forEach(voice => {
+        console.log('  -', voice.name, '(' + voice.lang + ')');
     });
 }
 
@@ -102,40 +102,61 @@ function displayWord() {
     updateNavigation();
 }
 
-// Text-to-Speech function
+// Text-to-Speech function with Google Translate fallback
 async function pronounceWord(arabicText) {
-    if (!('speechSynthesis' in window)) {
-        alert('К сожалению, ваш браузер не поддерживает озвучивание');
-        return;
-    }
-
-    // Cancel any ongoing speech
-    window.speechSynthesis.cancel();
-    
-    // Small delay to ensure cancel completes
-    await new Promise(resolve => setTimeout(resolve, 100));
-    
-    const utterance = new SpeechSynthesisUtterance(arabicText);
-    utterance.lang = 'ar-SA'; // Arabic (Saudi Arabia)
-    utterance.rate = 0.75; // Slower for learning
-    utterance.pitch = 1;
-    utterance.volume = 1;
-    
-    // Try to find an Arabic voice
-    const arabicVoice = voices.find(voice => voice.lang.startsWith('ar'));
-    if (arabicVoice) {
-        utterance.voice = arabicVoice;
-        console.log('Using voice:', arabicVoice.name);
+    // First try browser TTS if Arabic voice is available
+    if ('speechSynthesis' in window && voices.some(v => v.lang.startsWith('ar'))) {
+        window.speechSynthesis.cancel();
+        await new Promise(resolve => setTimeout(resolve, 100));
+        
+        const utterance = new SpeechSynthesisUtterance(arabicText);
+        utterance.lang = 'ar-SA';
+        utterance.rate = 0.75;
+        utterance.pitch = 1;
+        utterance.volume = 1;
+        
+        const arabicVoice = voices.find(voice => voice.lang.startsWith('ar'));
+        if (arabicVoice) {
+            utterance.voice = arabicVoice;
+        }
+        
+        utterance.onend = () => console.log('Speech ended');
+        utterance.onerror = (e) => {
+            console.error('Speech error:', e);
+            // Fallback to Google TTS on error
+            playGoogleTTS(arabicText);
+        };
+        
+        window.speechSynthesis.speak(utterance);
     } else {
-        console.log('No Arabic voice found, using default');
+        // Use Google Translate TTS as fallback
+        console.log('Using Google Translate TTS');
+        playGoogleTTS(arabicText);
     }
+}
+
+// Google Translate TTS fallback
+function playGoogleTTS(text) {
+    // Remove diacritics for better TTS pronunciation
+    const cleanText = text.normalize('NFD').replace(/[\u064B-\u065F]/g, '');
     
-    // Add event listeners for debugging
-    utterance.onstart = () => console.log('Speech started');
-    utterance.onend = () => console.log('Speech ended');
-    utterance.onerror = (e) => console.error('Speech error:', e);
+    // Create audio element with Google Translate TTS
+    const audio = new Audio();
+    audio.src = `https://translate.google.com/translate_tts?ie=UTF-8&tl=ar&client=tw-ob&q=${encodeURIComponent(cleanText)}`;
     
-    window.speechSynthesis.speak(utterance);
+    audio.onerror = (e) => {
+        console.error('Google TTS error:', e);
+        alert('Ошибка воспроизведения. Проверьте подключение к интернету.');
+    };
+    
+    audio.onloadeddata = () => {
+        console.log('Audio loaded, playing...');
+    };
+    
+    audio.play().catch(err => {
+        console.error('Play error:', err);
+        alert('Не удалось воспроизвести аудио. Попробуйте еще раз.');
+    });
 }
 
 // Update navigation buttons and counter
